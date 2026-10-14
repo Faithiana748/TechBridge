@@ -73,6 +73,8 @@ p { margin: 0 0 1em;}
 .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .7);}
 .btn-ghost:hover { background: #fff; color: var(--ink); border-color: #fff;}
 .btn-blue { background: var(--blue); border-color: var(--blue); color: #fff;}
+.btn-ghost-dark { background: transparent; color: var(--ink); border-color: var(--ink);}
+.btn-ghost-dark:hover { background: var(--ink); color: #fff;}
 .btn-blue:hover { background: var(--blue-dark); border-color: var(--blue-dark);}
 .btn-small { padding: .5rem 1rem;}
 .actions { display: flex; flex-wrap: wrap; gap: .9rem;}
@@ -87,6 +89,7 @@ p { margin: 0 0 1em;}
     border-bottom: 1px solid var(--line);
 }
 .header-inner {
+    width: min(1240px, 100% - 2.5rem);
     position: relative;
     display: flex;
     align-items: center;
@@ -105,8 +108,9 @@ p { margin: 0 0 1em;}
     padding: 0;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
 }
+.site-nav a { white-space: nowrap;}
 .site-header a:not(.btn) {
     color: var(--ink);
     text-decoration: none;
@@ -431,7 +435,7 @@ p { margin: 0 0 1em;}
 
 /* INTERNSHIP TASKS: 30-DAY OVERVIEW */
 .daybar { margin-top: 3rem; padding: 0 1.75rem;}
-daybar-points {
+.daybar-points {
     position: relative;
     list-style: none;
     margin: 0;
@@ -495,7 +499,7 @@ daybar-points {
     border: 5px solid var(--ink);
 }
 .daybar-ends { display: none;}
- 
+
 /* INTERNSHIP TASKS: DIFFICULTY */
 .meter { display: inline-flex; gap: 3px;}
 .meter i { display: block; width: 14px; height: 8px; border-radius: 2px; background: var(--line);}
@@ -508,7 +512,7 @@ daybar-points {
     margin: 2.5rem 0 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 }
 .legend li {
@@ -523,7 +527,7 @@ daybar-points {
 }
 .legend strong { font-family: var(--font-head); font-size: 1.05rem; line-height: 1.25;}
 .legend li > span:last-child { color: var(--ink-soft); font-size: 1rem;}
- 
+
 /* INTERNSHIP TASKS: THE 8 TASKS */
 .journey { list-style: none; margin: 3rem 0 0; padding: 0;}
 .task {
@@ -613,8 +617,76 @@ daybar-points {
 .task-card dd:last-child { margin-bottom: 0;}
 .task:target .task-card { box-shadow: 0 0 0 4px rgba(56, 183, 9, .35);}
 
-/* NAVIGATION: HAMBURGER BELOW 1040px */
-@media (max-width: 1040px) {
+/* ROADMAP PAGE: TRACK PICKER */
+.track-picker {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+.track-btn {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "icon name" "icon desc" "state state";
+    column-gap: 1.1rem;
+    row-gap: .15rem;
+    align-items: center;
+    min-height: 44px;
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    font: inherit;
+    color: var(--ink);
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-top-width: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s, background .2s;
+}
+.track-btn[data-track="data-analytics"] { border-top-color: var(--signal);}
+.track-btn[data-track="web-development"] { border-top-color: var(--blue);}
+.track-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 0 rgba(12, 0, 76, .12);}
+.track-icon { grid-area: icon; width: 52px; height: 52px; fill: var(--ink); stroke: var(--ink);}
+.track-name { grid-area: name; font-family: var(--font-head); font-weight: 800; font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.02em;}
+.track-desc { grid-area: desc; color: var(--ink-soft);}
+.track-state {
+    grid-area: state;
+    margin-top: .9rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: .95rem;
+    color: var(--blue);
+}
+.track-btn[aria-pressed="true"] { background: var(--ink); color: #fff;}
+.track-btn[aria-pressed="true"] .track-icon { fill: #fff; stroke: #fff;}
+.track-btn[aria-pressed="true"] .track-desc { color: #d9defa;}
+.track-btn[aria-pressed="true"] .track-state { color: var(--signal); border-top-color: rgba(255, 255, 255, .3);}
+.track-btn[aria-pressed="true"] .track-state::before { content: "\2713\00a0"; }
+.noscript-note { margin-top: 1.5rem; padding: 1rem 1.25rem; border: 2px solid var(--ink); background: #fff;}
+
+/* ROADMAP PAGE: CURRENTLY VIEWING */
+.viewing {
+    margin-top: 2rem;
+    padding: 1.25rem 1.75rem;
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-left-width: 12px;
+    border-radius: 4px;
+}
+.viewing[data-track="data-analytics"] { border-left-color: var(--signal);}
+.viewing[data-track="web-development"] { border-left-color: var(--blue);}
+.viewing-label { margin: 0; font-family: var(--font-head); font-weight: 700; font-size: .95rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft);}
+.viewing-track { margin: .15rem 0 .25rem; font-family: var(--font-head); font-weight: 800; font-size: clamp(1.75rem, 5vw, 2.75rem); line-height: 1.05; letter-spacing: -0.02em; text-transform: uppercase;}
+.viewing-summary { margin: 0; color: var(--ink-soft);}
+.daybar-title { margin-top: 3rem; font-size: 1.6rem;}
+.daybar-title + .section-lead { margin-top: .5rem;}
+.roadmap-anim, .journey .task { animation: rise .45s ease both; animation-delay: calc(var(--i, 0) * 60ms);}
+@keyframes rise { from { opacity: 0; transform: translateY(14px);} to { opacity: 1; transform: none;}}
+
+/* NAVIGATION: HAMBURGER BELOW 1280px (the full menu needs about 1200px) */
+@media (max-width: 1280px) {
     .nav-open { display: inline-flex;}
     .site-nav {
         position: absolute;
@@ -640,9 +712,10 @@ daybar-points {
     .footer-inner { grid-template-columns: 1fr 1fr;}
     .footer-brand { grid-column: 1 / -1;}
     .program-detail .split { grid-template-columns: 1fr;}
-    .legend { grid-template-columns: repeat(2, 1fr);}
+    .legend { grid-template-columns: 1fr;}
+    .legend li { flex-direction: row; flex-wrap: wrap; align-items: center; gap: .4rem 1rem;}
 }
- 
+
 /* MOBILE */
 @media (max-width: 640px) {
     body { font-size: 1.0625rem;}
@@ -661,6 +734,9 @@ daybar-points {
     .end-dot { width: 14px; height: 14px; margin: 5px 0; border-width: 4px;}
     .daybar-ends { display: flex; justify-content: space-between; margin: .5rem -.4rem 0; font-family: var(--font-head); font-weight: 700; font-size: .9rem;}
     .legend { grid-template-columns: 1fr;}
+    .track-picker { grid-template-columns: 1fr;}
+    .track-btn { padding: 1.1rem 1.1rem;}
+    .viewing { padding: 1rem 1.1rem; border-left-width: 8px;}
     .task { grid-template-columns: 4.25rem 1fr;}
     .task-day { padding: .75rem 1rem 0 0;}
     .task-day::after { top: 1.2rem; right: -13px; width: 20px; height: 20px; border-width: 4px;}
@@ -675,8 +751,10 @@ daybar-points {
     .compare td::before { content: attr(data-label); display: block; font-family: var(--font-head); font-weight: 700; color: var(--ink); font-size: .95rem;}
     .compare td:last-child { padding-bottom: 1rem;}
 }
- 
+
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto;}
     .bridge svg { animation: none;}
+    .journey .task { animation: none;}
+    .track-btn { transition: none;}
 }
